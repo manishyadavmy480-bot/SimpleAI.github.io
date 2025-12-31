@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Simple Chat UI</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      background:#f4f4f4; 
+      padding:20px;
+    }
+    #chat { 
+      width: 100%; 
+      max-width:600px; 
+      margin:0 auto; 
+      background:white; 
+      border-radius:8px; 
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    #messages { 
+      height:360px; 
+      overflow:auto; 
+      padding:20px; 
+      border-bottom:1px solid #eee; 
+    }
+    .msg { margin-bottom:12px; }
+    .user { text-align:right; }
+    .bubble { 
+      display:inline-block; 
+      padding:8px 12px; 
+      border-radius:16px; 
+      max-width:80%; 
+    }
+    .bubble.user { background:#d1e7ff; }
+    .bubble.bot { background:#f0f0f0; }
+    #inputArea { 
+      display:flex; 
+      padding:12px; 
+    } 
+    #inputArea input { 
+      flex:1; 
+      padding:8px; 
+      font-size:16px; 
+    }
+    #inputArea button { 
+      padding:8px 12px; 
+      margin-left:8px; 
+    }
+  </style>
+</head>
+<body>
+  <div id="chat">
+    <div id="messages"></div>
+    <div id="inputArea">
+      <input id="msg" placeholder="Type a message..." />
+      <button id="send">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const messages = document.getElementById('messages');
+    const input = document.getElementById('msg');
+    const send = document.getElementById('send');
+
+    function appendMessage(text, who='bot') {
+      const el = document.createElement('div');
+      el.className = 'msg ' + (who === 'user' ? 'user' : 'bot');
+      const bubble = document.createElement('span');
+      bubble.className = 'bubble ' + (who === 'user' ? 'user' : 'bot');
+      bubble.textContent = text;
+      el.appendChild(bubble);
+      messages.appendChild(el);
+      messages.scrollTop = messages.scrollHeight;
+    }
+ 
+    function getReply(text) {
+      const t = text.toLowerCase();
+      if (/hello|hi|namaste/.test(t)) return "Namaste! Kaise madad kar sakta hoon🙏🏻?";
+      if (/kaise ho|kese ho/.test(t)) return "Main theek hoon — aap kaise ho?";
+      if (/kya kar sakte ho/.test(t)) return "Main code bata sakta hoon, sawalon ke jawab de sakta hoon, aur examples dikha sakta hoon.";
+      if (/what is the largest planet in our solor system/.test(t)) return "jupitar";
+      if (/elon musk kon hai/.test(t)) return "this person founder and ceo of tesla.";
+      if (/modi kon hai/.test(t)) return "this person is prime minister of india";
+      if (/manish yadav kon hai/.test(t)) return "this person co-founder of agrioro";
+      if (/raghavendra kon hai/.test(t)) return "this person founder and ceo of agrioro";
+      if (/what is psychology/.test(t)) return "Psychology is the scientific study of the mind, behavior, and human experience, aiming to understand how mental processes influence thoughts, feelings, and actions, and how these factors shape our interactions and development";
+      if (/types of psychology/.test(t)) return "Psychology encompasses many types of psychology, with major areas including Clinical, Cognitive, Behavioral, Biopsychology, Developmental, Social, and Industrial-Organizational psychology. These branches explore different facets of human thought, emotion, and behavior, such as treating mental disorders (Clinical), the study of mental processes like memory (Cognitive), and how people interact with each other (Social).";
+      if (/who is the national bird of india?/.test(t)) return "Peacock";
+      if (/india national flower/.test(t)) return "lotus";
+      if (/who is the president of india?/.test(t)) return "Droupadi murmu";
+      if (/who was the first women prime minister of india?/.test(t)) return "indira gandhi";
+      if (/who build the taj mahal?/.test(t)) return "mughal emperor shah jahan";
+      if (/what is the national animal of india?/.test(t)) return "Royal bengal tiger";
+      if (/what is national game of india?/.test(t)) return "Hockey";
+      if (/when india's independence day celebrated?/.test(t)) return "15th august";
+      if (/who is the missile man of india?/.test(t)) return "Dr.A.P.J. abdul kalam";
+      if (/who discover gravity/.test(t)) return "sir issac newton";
+      if (/what was the largest desert of world?/.test(t)) return "sahara desert";
+      if (/who wrote the national anthem of india?/.test(t)) return "rabindranath tagore";
+      if (/what is the currency of japan/.test(t)) return "Yan";
+      if (/what is the capital of india/.test(t)) return "New delhi";
+      if (/what is the capital of france/.test(t)) return "Paris";
+      if (/what is the largest planet in our solor system /.test(t)) return "Jupitar";
+      if (/what is the boiling point of water in celsius/.test(t)) return "100°C";
+      if (/who is the jungle king/.test(t)) return "lion";
+      if (/what is the chemical formula of water/.test(t)) return "H20";
+      if (/who is the first prime minister of india/.test(t)) return "Jawaharlal Nehru";
+      if (/which is the largest continent in the world/.test(t)) return "Asia";
+      if (/which planet is closest to sun/.test(t)) return "Mercury";
+      if (/which is the largest country in the world by area/.test(t)) return "Russia";
+      if (/Where is taj mahal located/.test(t)) return "Agra,India";
+      if (/The bhagavad gita is a holy book of which religion/.test(t)) return "hinduism";
+      if (/How many continents are there on earth? /.test(t)) return "Seven";
+      if (/Who was the first person to walk on the moon? /.test(t)) return "Neil Armstrong";
+      if (/What is the national song of india/.test(t)) return "Vande mataram";
+      if (/Which is the smallest continent in the world/.test(t)) return "Australia";
+      if (/Who is known as the father of the nation in india/.test(t)) return "Mahatma ghandi";
+      if (/Which planet is known as the the blue planet/.test(t)) return "Earth";
+      if (/which festival known as the festival of lights/.test(t)) return "Diwali";
+      if (/Who is the national fruit of india/.test(t)) return "Mango";
+      if (/Who invented the light bulb/.test(t)) return "Thomas Edison";
+      if (/How many colors are there in a rainbow/.test(t)) return "Sheven";
+      if (/Which is the fastest land animal/.test(t)) return "Cheetah";
+      if (/Who is the first president of india/.test(t)) return "Dr. Rajendra prasad";
+      if (/Which is the largest planet in our solar system/.test(t)) return "Jupitar";
+      if (/What is the national sport of india/.test(t)) return "Hockey";
+      if (/In which year did india get independence/.test(t)) return "1947";
+      if (/Which country is known as the land of the rising sun /.test(t)) return "Japan";
+      if (/What is the hardestnatural substance on earth /.test(t)) return "Diamond";
+      if (/Which animal known as the ship of the desert/.test(t)) return "Camel";
+      if (/Which is the longest river in the world/.test(t)) return "Nile river";
+      if (/Which is the tallest mountain of the world/.test(t)) return "Mount everest";
+      if (/Which orgen in human body purifies blood/.test(t)) return "Kidney";
+      if (/Where is the national tree of india/.test(t)) return "Banyan tree";
+      if (/Which countary gifted the statue of liberty to the USA /.test(t)) return "France";
+      if (/which planetis known for iys rings/.test(t)) return "Surtun";
+      if (/What is the largest mammal in the world/.test(t)) return "Blur Whale";
+      if (/Which is the largest state in india by area/.test(t)) return "Rajasthan";
+      if (/Who was the first woman IPS officer of India/.test(t)) return "Kiran Bedi";
+      if (/What is the national heritage animal of India?/.test(t)) return "Elephant";
+      if (/bye|exit|quit/.test(t)) return "Alvida! Phir milte hain👋.";
+      if (t.includes('?')) return "Achha sawal — thoda specific batao.";
+      return "Hmm — thoda aur batao ya koi aur sawal pucho.";
+    }
+
+    send.addEventListener('click', () => {
+      const text = input.value.trim();
+      if (!text) return;
+      appendMessage(text, 'user');
+      input.value = '';
+      setTimeout(() => {
+        appendMessage(getReply(text), 'bot');
+      }, 300);
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') send.click();
+    });
+
+    appendMessage("Hello! Main simple chatbot hoon. Kuch poochho.");
+  </script>
+</body>
+</html>
